@@ -1,7 +1,22 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Button, Container, TextField, MenuItem, Select, FormControl, InputLabel, FormHelperText, Switch, FormControlLabel } from '@mui/material';
-import Autocomplete from '@mui/material/Autocomplete'; // Import Autocomplete if needed
+import { Button, 
+  Container, 
+  TextField, 
+  MenuItem, 
+  Select, 
+  FormControl, 
+  InputLabel, 
+  FormHelperText, 
+  Switch, 
+  FormControlLabel,
+  Checkbox,
+  Slider,
+  Autocomplete,
+  Rating,
+  Radio,
+  RadioGroup
+} from '@mui/material';
 import fields from './fields';
 
 const App = () => {
@@ -27,7 +42,7 @@ const App = () => {
             control={control}
             defaultValue={field.default_value || ""}
             rules={field.controller && field.controller.rules}
-            render={({ field: controllerField, fieldState, field: { onChange } }) => ( // Added field: { onChange }
+            render={({ field: controllerField, fieldState, field: { onChange } }) => ( 
               <>
                 {field.field_is === 'text_fields' ? (
                   <FormControl fullWidth={field.filters.fullWidth} margin="normal" variant={field.variant} error={!!fieldState.error}>
@@ -85,9 +100,68 @@ const App = () => {
                   />
                   <FormHelperText sx={{ color: 'red' }}>{fieldState.error ? fieldState.error.message : field.helper_text}</FormHelperText> 
                 </div>
-                
-                ) : null}
-                
+                ) : field.field_is === 'checkbox' ? (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        {...controllerField}
+                        checked={!!controllerField.value}
+                        onChange={(e) => onChange(e.target.checked)}
+                      />
+                    }
+                    label={field.label}
+                  />
+                ) : field.field_is === 'slider' ? (
+               
+                <Slider
+               {...controllerField}
+               value={parseInt(controllerField.value, 10)} // Convert the value to a number
+               aria-labelledby="sliderLabel"
+               valueLabelDisplay="auto"
+               step={field.options.step}
+               min={field.options.min}
+               max={field.options.max}
+               onChange={(event, newValue) => onChange(newValue)}
+              />
+
+            ) : field.field_is === 'rating' ? (
+              <FormControl fullWidth={field.filters.fullWidth} margin="normal" error={!!fieldState.error}>
+                <InputLabel>{field.label}</InputLabel>
+                <Rating
+                  {...controllerField}
+                  value={parseFloat(controllerField.value) || field.default_value}
+                  precision={field.options.precision}
+                  onChange={(e, value) => onChange(value)}
+                />
+                <FormHelperText>{fieldState.error ? fieldState.error.message : field.helper_text}</FormHelperText>
+              </FormControl>
+            ) : field.field_is === 'radio_group' ? (
+              <FormControl fullWidth={field.filters.fullWidth} margin="normal" error={!!fieldState.error}>
+                <InputLabel>{field.label}</InputLabel>
+                <RadioGroup
+                  {...controllerField}
+                  value={controllerField.value}
+                  onChange={(e) => onChange(e.target.value)}
+                >
+                  {field.options.map((option, index) => (
+                    <FormControlLabel key={index} value={option.value} control={<Radio />} label={option.label} />
+                  ))}
+                </RadioGroup>
+                <FormHelperText>{fieldState.error ? fieldState.error.message : field.helper_text}</FormHelperText>
+              </FormControl>
+           ) : field.field_is === 'datetime_picker' ? (
+            <FormControl fullWidth={field.filters.fullWidth} margin="normal" error={!!fieldState.error}>
+              <InputLabel>{field.label}</InputLabel>
+              <TextField
+                {...controllerField}
+                type="datetime-local"
+                InputLabelProps={{ shrink: true }}
+                onChange={(e) => onChange(e.target.value)}
+              />
+              <FormHelperText>{fieldState.error ? fieldState.error.message : field.helper_text}</FormHelperText>
+            </FormControl>
+            
+          ) : null}
               </>
             )}
           />
