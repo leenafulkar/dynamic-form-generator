@@ -129,7 +129,7 @@ const fields = [
         "name": "autocomplete",
         "label": "Autocomplete",
         "placeholder": "Start typing...",
-        "default_value": [], // Changed the default value to an empty array
+        "default_value": [], 
         "type": "autocomplete",
         "style": {},
         "helper_text": "",
@@ -189,8 +189,383 @@ const fields = [
           },
           "custom": {}
         }
-      }
+      },
+      {
+        "field_is": "checkbox",
+        "name": "checkbox",
+        "label": "Checkbox",
+        "default_value": false,
+        "type": "checkbox",
+        "style": {
           
+        },
+        "helper_text": "",
+        "variant": "",
+        "filters": {
+          "auto_complete": true,
+          "auto_focus": true,
+          "error": false,
+          "disabled": false,
+          "required": true,
+          "hideLabel": false,
+          "validations": true,
+          "fullWidth": true
+        },
+        "controller": {
+          "name": "",
+          "control": "",
+          "rules": {
+            
+            "customValidation": {
+              "rule": "value => validateCheckbox(value)",
+              "message": "Custom validation failed. Please customize this error message."
+            },
+            "customErrorMessage": {
+              "rule": "value => value.trim().length > 0",
+              "message": "Please customize this error message."
+            },
+            "mustBeTrue": {
+              "rule": "value => value === true",
+              "message": "The checkbox must be checked."
+            }
+          }
+        },
+        "custom": {
+          
+        }
+      },
+      {
+        "field_is": "slider",
+        "name": "slider",
+        "label": "",
+        "default_value": "20",
+        "type": "slider",
+        "style": {
+          
+        },
+        "helper_text": "",
+        "variant": "outlined",
+        "options": {
+          "min": 0,
+          "max": 100,
+          "step": 1
+        },
+        "filters": {
+          "auto_complete": true,
+          "auto_focus": true,
+          "error": false,
+          "disabled": false,
+          "required": true,
+          "hideLabel": false,
+          "validations": true,
+          "fullWidth": true
+        },
+        "controller": {
+          "name": "",
+          "control": "",
+          "rules": {
+            "required": {
+                "value": true,
+                "message": "Please slide"
+              },
+            "customValidation": {
+              "rule": "value => validateSlider(value)",
+              "message": "Custom validation failed. Please customize this error message."
+            },
+            "customErrorMessage": {
+              "rule": "value => value.trim().length > 0",
+              "message": "Please customize this error message."
+            },
+            "minValue": {
+              "rule": "value => value >= 0",
+              "message": "Value must be greater than or equal to 0."
+            },
+            "maxValue": {
+              "rule": "value => value <= 10",
+              "message": "Value must be less than or equal to 100."
+            },
+            "step": {
+              "rule": "value => value % 1 === 0",
+              "message": "Step must be a whole number."
+            }
+          },
+          "custom": {
+            
+          }
+        }
+    },
+    {
+        "field_is": "rating",
+        "name": "rating",
+        "label": "",
+        "default_value": 0,
+        "type": "rating",
+        "style": {},
+        "helper_text": "",
+        "variant": "",
+        "options": {
+          "min": 0,
+          "max": 5,
+          "precision": 1
+        },
+        "filters": {
+          "auto_focus": true,
+          "error": false,
+          "disabled": false,
+          "required": true,
+          "hideLabel": false,
+          "validations": true,
+          "fullWidth": true
+        },
+        "controller": {
+          "name": "",
+          "control": "",
+          "rules": {
+            "customValidation": {
+              "rule": "value => validateRating(value)",
+              "message": "Custom validation failed. Please customize this error message."
+            },
+            "customErrorMessage": {
+              "rule": "value => value.trim().length > 0",
+              "message": "Please customize this error message."
+            },
+            "minValue": {
+              "rule": "value => value >= 0",
+              "message": "Value must be greater than or equal to 0."
+            },
+            "maxValue": {
+              "rule": "value => value <= 5",
+              "message": "Value must be less than or equal to 5."
+            },
+            "step": {
+              "rule": "value => value % 0.5 === 0",
+              "message": "Step must be a multiple of 0.5."
+            }
+          }
+        },
+        "custom": {}
+      },
+      {
+        "field_is": "radio_group",
+        "name": "gender",
+        "label": "",
+        "default_value": "",
+        "type": "",
+        "options": [
+          {
+            "label": "Male",
+            "value": "male"
+          },
+          {
+            "label": "Female",
+            "value": "female"
+          },
+          {
+            "label": "Other",
+            "value": "other"
+          }
+        ],
+        "style": {},
+        "helper_text": "",
+        "variant": "outlined",
+        "filters": {
+          "auto_focus": true,
+          "error": false,
+          "disabled": false,
+          "required": true,
+          "hideLabel": false,
+          "validations": true,
+          "fullWidth": true
+        },
+        "controller": {
+          "name": "",
+          "control": "",
+          "rules": {
+            "required": {
+                "value": true,
+                "message": "Please Select"
+              },
+            "customValidation": {
+              "rule": "value => validateRadioGroup(value)",
+              "message": "Custom validation failed. Please customize this error message."
+            },
+            "customErrorMessage": {
+              "rule": "value => value.trim().length > 0",
+              "message": "Please customize this error message."
+            },
+            "allowedValues": {
+              "rule": "value => value.every(item => ['male', 'female', 'other'].includes(item))",
+              "message": "Invalid gender selection."
+            },
+            "minSelections": {
+              "rule": "value => value.length >= 1",
+              "message": "Please select at least 1 option."
+            },
+            "maxSelections": {
+              "rule": "value => value.length <= 1",
+              "message": "You can only select 1 option."
+            }
+          }
+        },
+        "custom": {}
+      },
+      {
+        "field_is": "datetime_picker",
+        "name": "event_date",
+        "label": "",
+        "default_value": "",
+        "type": "datetime",
+        "style": {},
+        "helper_text": "",
+        "variant": "outlined",
+        "filters": {
+          "auto_focus": true,
+          "error": false,
+          "disabled": false,
+          "required": true,
+          "hideLabel": false,
+          "validations": true,
+          "fullWidth": true
+        },
+        "controller": {
+          "name": "",
+          "control": "",
+          "rules": {
+            "required": {
+                "value": true,
+                "message": "Select the date and time of the event"
+              },
+            "customValidation": {
+              "rule": "value => validateDateTime(value)",
+              "message": "Custom validation failed. Please customize this error message."
+            },
+            "customErrorMessage": {
+              "rule": "value => value.trim().length > 0",
+              "message": "Please customize this error message."
+            },
+            "minDate": {
+              "rule": "value => new Date(value) >= new Date('2024-01-01')",
+              "message": "Date must be on or after January 1, 2024."
+            },
+            "maxDate": {
+              "rule": "value => new Date(value) <= new Date('2025-12-31')",
+              "message": "Date must be on or before December 31, 2025."
+            }
+          }
+        },
+        "custom": {}
+      },
+      {
+        "field_is": "transfer",
+        "name": "",
+        "label": "",
+        "source_list": {
+          "label": "Available Items",
+          "items": [
+            "Item 1",
+            "Item 2",
+            "Item 3"
+          ]
+        },
+        "target_list": {
+          "label": "Selected Items",
+          "items": []
+        },
+        "type": "transfer",
+        "style": {},
+        "helper_text": "",
+        "variant": "",
+        "filters": {
+          "auto_complete": true,
+          "auto_focus": true,
+          "error": false,
+          "multiline": false,
+          "disabled": false,
+          "required": true,
+          "hideLabel": false,
+          "validations": true,
+          "fullWidth": true
+        },
+        "controller": {
+          "name": "",
+          "control": "",
+          "rules": {
+            "minItems": {
+              "rule": "value => value.length >= 1",
+              "message": "Please select at least 1 item."
+            },
+            "maxItems": {
+              "rule": "value => value.length <= 5",
+              "message": "You cannot select more than 5 items."
+            },
+            "allowedItems": {
+              "rule": "value => value.every(item => ['Item 1', 'Item 2', 'Item 3'].includes(item))",
+              "message": "Invalid item selection."
+            },
+            "uniqueItems": {
+              "rule": "value => new Set(value).size === value.length",
+              "message": "Duplicate items are not allowed."
+            },
+            "minSelectedItems": {
+              "rule": "value => value.length >= 1",
+              "message": "Please select at least 1 item."
+            },
+            "maxSelectedItems": {
+              "rule": "value => value.length <= 3",
+              "message": "You cannot select more than 3 items."
+            },
+            "totalMaxItems": {
+              "rule": "value => value.length <= 10",
+              "message": "Total selected items cannot exceed 10."
+            },
+            "totalMinItems": {
+              "rule": "value => value.length >= 1",
+              "message": "Please select at least 1 item."
+            },
+            "sourceListMinItems": {
+              "rule": "value => value.length >= 1",
+              "message": "Please include at least 1 item in the source list."
+            },
+            "sourceListMaxItems": {
+              "rule": "value => value.length <= 5",
+              "message": "Source list cannot have more than 5 items."
+            },
+            "targetListMinItems": {
+              "rule": "value => value.length >= 0",
+              "message": "Target list cannot be empty."
+            },
+            "targetListMaxItems": {
+              "rule": "value => value.length <= 5",
+              "message": "Target list cannot have more than 5 items."
+            },
+            "validateSourceList": {
+              "rule": "value => true",
+              "message": "Source list validation failed."
+            },
+            "validateTargetList": {
+              "rule": "value => true",
+              "message": "Target list validation failed."
+            },
+            "validateTransferDirection": {
+              "rule": "value => value === 'bidirectional'",
+              "message": "Transfer direction must be bidirectional."
+            },
+            "validateItemContent": {
+              "rule": "value => true",
+              "message": "Item content validation failed."
+            },
+            "validateTransferSpeed": {
+              "rule": "value => value === 'fast'",
+              "message": "Transfer speed must be fast."
+            }
+          }
+        },
+        "custom": {}
+      }
+      
+      
+      
+      
   ];
   
   export default fields
