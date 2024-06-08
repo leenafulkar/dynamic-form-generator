@@ -22,7 +22,7 @@ const fields = [
           "required": "Please enter your name",
           "minLength": {
             "value": 5,
-            "message": "Minimum length is 6 characters"
+            "message": "Minimum length is  characters"
           },
           "maxLength": {
             "value": 20,
