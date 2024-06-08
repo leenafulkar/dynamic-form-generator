@@ -15,7 +15,8 @@ import { Button,
   Autocomplete,
   Rating,
   Radio,
-  RadioGroup
+  RadioGroup,
+  CircularProgress,
 } from '@mui/material';
 import fields from './fields';
 
@@ -27,6 +28,8 @@ const App = () => {
     }, {}),
   });
 
+
+  
   const onSubmit = (data) => {
     console.log('Form data submitted:', data);
     reset();
@@ -94,7 +97,7 @@ const App = () => {
                     {...controllerField}
                     options={field.options}
                     getOptionLabel={(option) => option.label || ''}
-                    renderInput={(params) => <TextField {...params} label={field.label} sx={{ color: 'red' }} />} 
+                    renderInput={(params) => <TextField {...params} label={field.label} error={!!fieldState.error}  />} 
                     onChange={(e, value) => onChange(value)}
                     value={field.options.find((opt) => opt.value === controllerField.value) || null}
                   />
@@ -156,13 +159,114 @@ const App = () => {
                 {...controllerField}
                 type="datetime-local"
                 InputLabelProps={{ shrink: true }}
+                error={!!fieldState.error}
                 onChange={(e) => onChange(e.target.value)}
               />
               <FormHelperText>{fieldState.error ? fieldState.error.message : field.helper_text}</FormHelperText>
             </FormControl>
-            
-          ) : null}
-              </>
+             ) : field.field_is === 'multiple_selector' ? (
+              <FormControl fullWidth={field.filters.fullWidth} margin="normal" variant={field.variant} error={!!fieldState.error}>
+                <InputLabel>{field.label}</InputLabel>
+                <Select
+                  {...controllerField}
+                  label={field.label}
+                  multiple
+                  value={controllerField.value}
+                  onChange={onChange}
+                  renderValue={(selected) => selected.join(', ')}
+                >
+                  {field.options.map((option, optIndex) => (
+                    <MenuItem key={optIndex} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText>{fieldState.error ? fieldState.error.message : field.helper_text}</FormHelperText>
+              </FormControl>
+           ) : field.field_is === 'circular_integration' ? (
+            <FormControl fullWidth={field.filters.fullWidth} margin="normal">
+              <FormControlLabel
+                control={
+                  <Switch
+                    {...controllerField}
+                    checked={!!controllerField.value}
+                    color="primary"
+                    onChange={(e) => onChange(e.target.checked)}
+                  />
+                }
+                label={field.label}
+              />
+              {field.custom.circularProgress.integration && (
+                <CircularProgress
+                  color={field.custom.circularProgress.color}
+                  size={field.custom.circularProgress.size}
+                  thickness={field.custom.circularProgress.thickness}
+                />
+              )}
+              {fieldState.error && (
+                <FormHelperText error>
+                  {fieldState.error.message}
+                </FormHelperText>
+              )}
+            </FormControl>
+         ) : field.field_is === 'password' ? (
+          <FormControl fullWidth={field.filters.fullWidth} margin="normal" variant={field.variant} error={!!fieldState.error}>
+            <InputLabel>{field.label}</InputLabel>
+            <TextField
+              {...controllerField}
+              label={field.label}
+              type={field.type}
+              placeholder={field.placeholder}
+              helperText={field.helper_text || (fieldState.error ? fieldState.error.message : '')}
+              variant={field.variant || "outlined"}
+              fullWidth={field.filters.fullWidth}
+              autoFocus={field.filters.auto_focus}
+              margin="normal"
+              error={!!fieldState.error}
+            />
+           
+          </FormControl>
+          ) : field.field_is === 'email' ? (
+            <FormControl fullWidth={field.filters.fullWidth} margin="normal" variant={field.variant} error={!!fieldState.error}>
+            <InputLabel>{field.label}</InputLabel>
+            <TextField
+              {...controllerField}
+              label={field.label}
+              type={field.type}
+              placeholder={field.placeholder}
+              helperText={field.helper_text || (fieldState.error ? fieldState.error.message : '')}
+              variant={field.variant || "outlined"}
+              fullWidth={field.filters.fullWidth}
+              autoFocus={field.filters.auto_focus}
+              margin="normal"
+              error={!!fieldState.error}
+            />
+           
+          </FormControl>
+          
+          ) : field.field_is === 'message' ? (
+            <FormControl fullWidth={field.filters.fullWidth} margin="normal" variant={field.variant} error={!!fieldState.error}>
+            <InputLabel>{field.label}</InputLabel>
+            <TextField
+              {...controllerField}
+              label={field.label}
+              type={field.type}
+              placeholder={field.placeholder}
+              helperText={field.helper_text || (fieldState.error ? fieldState.error.message : '')}
+              variant={field.variant || "outlined"}
+              fullWidth={field.filters.fullWidth}
+              autoFocus={field.filters.auto_focus}
+              margin="normal"
+              error={!!fieldState.error}
+              multiline
+              rows={5}
+            />
+           
+          </FormControl>
+          
+        ) : null}
+        </>
+        
             )}
           />
         ))} <br/>
