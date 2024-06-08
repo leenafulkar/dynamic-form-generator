@@ -20,10 +20,6 @@ const fields = [
       "controller": {
         "rules": {
           "required": "Please enter your name",
-        //   "pattern": {
-        //     "value": /^[a-zA-Z0-9]+$/,
-        //     "message": "This pattern is not allowed"
-        //   },
           "minLength": {
             "value": 5,
             "message": "Minimum length is 6 characters"
@@ -455,8 +451,227 @@ const fields = [
         },
         "custom": {}
       },
+      {
+        "field_is": "multiple_selector",
+        "name": "multiple_selector",
+        "label": "Multiple Selector",
+        "options": [
+          { "value": "USA", "label": "United States" },
+          { "value": "Canada", "label": "Canada" },
+          { "value": "UK", "label": "United Kingdom" },
+          { "value": "Australia", "label": "Australia" }
+        ],
+        "default_value": [],
+        "type": "dropdown",
+        "style": {},
+        "helper_text": "",
+        "variant": "outlined",
+        "filters": {
+          "auto_complete": true,
+          "auto_focus": true,
+          "error": false,
+          "multiline": false,
+          "disabled": false,
+          "required": true,
+          "hideLabel": false,
+          "validations": true,
+          "fullWidth": true
+        },
+        "controller": {
+          "name": "country_selector",
+          "control": "",
+          "rules": {
+            "required": {
+                "value": true,
+                "message": "Please Select at least one country"
+              },
+           
+          }
+        },
+        "custom": {}
+      },
+    //   {
+    //     field_is: "circular_integration",
+    //     name: "circular integration",
+    //     label: "CI",
+    //     default_value: false,
+    //     type: "boolean",
+    //     style: {},
+    //     helper_text: "",
+    //     variant: "",
+    //     filters: {
+    //       auto_complete: false,
+    //       auto_focus: false,
+    //       multiline: false,
+    //       disabled: false,
+    //       required: false,
+    //       hideLabel: false,
+    //       fullWidth: true
+    //     },
+    //     controller: {
+    //       name: "toggle",
+    //       control: "",
+    //       rules: {
+    //         validateToggle: {
+    //           rule: value => value === true || value === false,
+    //           message: "Toggle value must be either true or false."
+    //         },
+    //         minValue: {
+    //           rule: value => value === false,
+    //           message: "Minimum value should be false."
+    //         },
+    //         maxValue: {
+    //           rule: value => value === true,
+    //           message: "Maximum value should be true."
+    //         },
+    //         mustBeTrue: {
+    //           rule: value => value === true,
+    //           message: "The toggle must be set to true."
+    //         },
+    //         mustBeFalse: {
+    //           rule: value => value === false,
+    //           message: "The toggle must be set to false."
+    //         }
+    //       }
+    //     },
+    //     custom: {
+    //       circularProgress: {
+    //         integration: true,
+    //         color: "primary",
+    //         size: 40,
+    //         thickness: 4
+    //       }
+    //     }
+    //   },
+
+    
+    {
+        "field_is": "password",
+        "name": "password",
+        "label": "",
+        "placeholder": "Enter your password",
+        "default_value": "",
+        "type": "password",
+        "helper_text": "",
+        "variant": "outlined",
+        "error": "This field is required",
+        "filters": {
+          "auto_complete": true,
+          "auto_focus": true,
+          "required": true,
+          "hideLabel": false,
+          "validations": true,
+          "fullWidth": true
+        },
+        "controller": {
+          "rules": {
+            "required": "Please enter your password",
+            
+            "minLength": {
+              "value": 6,
+              "message": "Minimum length is 6 characters"
+            },
+            "maxLength": {
+              "value": 10,
+              "message": "Maximum length is 10 characters"
+            },
+            "noWhitespace": {
+              "value": /^\S+$/,
+              "message": "Whitespace is not allowed"
+            },
+            "containsUppercase": {
+              "value": /[A-Z]/,
+              "message": "Password must contain at least one uppercase letter"
+            },
+            "containsLowercase": {
+              "value": /[a-z]/,
+              "message": "Password must contain at least one lowercase letter"
+            },
+            "containsNumber": {
+              "value": /[0-9]/,
+              "message": "Password must contain at least one number"
+            },
+            "containsSpecialCharacter": {
+              "value": /[^A-Za-z0-9]/,
+              "message": "Password must contain at least one special character"
+            }
+          }
+        }
+      },
       
-      
+        {
+          "field_is": "email",
+          "name": "email",
+          "label": "",
+          "placeholder": "Enter your email",
+          "default_value": "",
+          "type": "email",
+          "helper_text": "",
+          "variant": "outlined",
+          "error": "This field is required",
+          "filters": {
+            "auto_complete": true,
+            "auto_focus": true,
+            "required": true,
+            "hideLabel": false,
+            "validations": true,
+            "fullWidth": true
+          },
+          "controller": {
+            "rules": {
+              "required": {
+                "value": true,
+                "message": "Please enter your email"
+              },
+              "pattern": {
+                "value": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+                "message": "Please enter a valid email address"
+              },
+              "minLength": {
+                "value": 6,
+                "message": "Minimum length is 6 characters"
+              },
+              "maxLength": {
+                "value": 100,
+                "message": "Maximum length is 100 characters"
+              }
+            }
+          }
+        },
+        {
+            "field_is": "message",
+            "name": "message",
+            "label": "",
+            "placeholder": "Enter your message",
+            "default_value": "",
+            "type": "text",
+            "helper_text": "",
+            "variant": "outlined",
+            "error": "This field is required",
+            "filters": {
+              "auto_complete": false,
+              "auto_focus": true,
+              "required": true,
+              "hideLabel": false,
+              "validations": true,
+              "fullWidth": true
+            },
+            "controller": {
+              "rules": {
+                "required": "Please enter your message",
+                "minLength": {
+                  "value": 10,
+                  "message": "Minimum length is 10 characters"
+                },
+                "maxLength": {
+                  "value": 200,
+                  "message": "Maximum length is 200 characters"
+                }
+              }
+            }
+          }
+          
+        
       
       
   ];
