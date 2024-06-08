@@ -305,7 +305,7 @@ const fields = [
           "precision": 1
         },
         "filters": {
-          "auto_focus": true,
+          "auto_focus": false,
           "error": false,
           "disabled": false,
           "required": true,
@@ -468,7 +468,7 @@ const fields = [
         "variant": "outlined",
         "filters": {
           "auto_complete": true,
-          "auto_focus": true,
+          "auto_focus": false,
           "error": false,
           "multiline": false,
           "disabled": false,
@@ -557,7 +557,7 @@ const fields = [
         "error": "This field is required",
         "filters": {
           "auto_complete": true,
-          "auto_focus": true,
+          "auto_focus": false,
           "required": true,
           "hideLabel": false,
           "validations": true,
@@ -611,7 +611,7 @@ const fields = [
           "error": "This field is required",
           "filters": {
             "auto_complete": true,
-            "auto_focus": true,
+            "auto_focus": false,
             "required": true,
             "hideLabel": false,
             "validations": true,
@@ -650,7 +650,7 @@ const fields = [
             "error": "This field is required",
             "filters": {
               "auto_complete": false,
-              "auto_focus": true,
+              "auto_focus": false,
               "required": true,
               "hideLabel": false,
               "validations": true,
