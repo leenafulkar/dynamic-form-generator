@@ -490,61 +490,6 @@ const fields = [
         },
         "custom": {}
       },
-    //   {
-    //     field_is: "circular_integration",
-    //     name: "circular integration",
-    //     label: "CI",
-    //     default_value: false,
-    //     type: "boolean",
-    //     style: {},
-    //     helper_text: "",
-    //     variant: "",
-    //     filters: {
-    //       auto_complete: false,
-    //       auto_focus: false,
-    //       multiline: false,
-    //       disabled: false,
-    //       required: false,
-    //       hideLabel: false,
-    //       fullWidth: true
-    //     },
-    //     controller: {
-    //       name: "toggle",
-    //       control: "",
-    //       rules: {
-    //         validateToggle: {
-    //           rule: value => value === true || value === false,
-    //           message: "Toggle value must be either true or false."
-    //         },
-    //         minValue: {
-    //           rule: value => value === false,
-    //           message: "Minimum value should be false."
-    //         },
-    //         maxValue: {
-    //           rule: value => value === true,
-    //           message: "Maximum value should be true."
-    //         },
-    //         mustBeTrue: {
-    //           rule: value => value === true,
-    //           message: "The toggle must be set to true."
-    //         },
-    //         mustBeFalse: {
-    //           rule: value => value === false,
-    //           message: "The toggle must be set to false."
-    //         }
-    //       }
-    //     },
-    //     custom: {
-    //       circularProgress: {
-    //         integration: true,
-    //         color: "primary",
-    //         size: 40,
-    //         thickness: 4
-    //       }
-    //     }
-    //   },
-
-    
     {
         "field_is": "password",
         "name": "password",
@@ -669,7 +614,172 @@ const fields = [
                 }
               }
             }
-          }
+          },
+          {
+            "field_is": "transfer",
+            "name": "itemTransfer",
+            "label": "Transfer Items",
+            "source_list": {
+              "label": "Available Items",
+              "items": [
+                "Item 1",
+                "Item 2",
+                "Item 3"
+              ]
+            },
+            "target_list": {
+              "label": "Selected Items",
+              "items": []
+            },
+            "type": "transfer",
+            "style": {},
+            "helper_text": "",
+            "variant": "outlined",
+            "filters": {
+              "auto_complete": true,
+              "auto_focus": true,
+              "error": false,
+              "multiline": false,
+              "disabled": false,
+              "required": true,
+              "hideLabel": false,
+              "validations": true,
+              "fullWidth": true
+            },
+            "controller": {
+              "rules": {
+                "required": {
+                "value": true,
+                "message": "Please select at least one target"
+              },
+                "minItems": {
+                  "rule": "value => value.length >= 1",
+                  "message": "Please select at least 1 item."
+                },
+                "maxItems": {
+                  "rule": "value => value.length <= 5",
+                  "message": "You cannot select more than 5 items."
+                },
+                "allowedItems": {
+                  "rule": "value => value.every(item => ['Item 1', 'Item 2', 'Item 3'].includes(item))",
+                  "message": "Invalid item selection."
+                },
+                "uniqueItems": {
+                  "rule": "value => new Set(value).size === value.length",
+                  "message": "Duplicate items are not allowed."
+                },
+                "minSelectedItems": {
+                  "rule": "value => value.length >= 1",
+                  "message": "Please select at least 1 item."
+                },
+                "maxSelectedItems": {
+                  "rule": "value => value.length <= 3",
+                  "message": "You cannot select more than 3 items."
+                },
+                "totalMaxItems": {
+                  "rule": "value => value.length <= 10",
+                  "message": "Total selected items cannot exceed 10."
+                },
+                "totalMinItems": {
+                  "rule": "value => value.length >= 1",
+                  "message": "Please select at least 1 item."
+                },
+                "sourceListMinItems": {
+                  "rule": "value => value.length >= 1",
+                  "message": "Please include at least 1 item in the source list."
+                },
+                "sourceListMaxItems": {
+                  "rule": "value => value.length <= 5",
+                  "message": "Source list cannot have more than 5 items."
+                },
+                "targetListMinItems": {
+                  "rule": "value => value.length >= 0",
+                  "message": "Target list cannot be empty."
+                },
+                "targetListMaxItems": {
+                  "rule": "value => value.length <= 5",
+                  "message": "Target list cannot have more than 5 items."
+                },
+                "validateSourceList": {
+                  "rule": "value => true",
+                  "message": "Source list validation failed."
+                },
+                "validateTargetList": {
+                  "rule": "value => true",
+                  "message": "Target list validation failed."
+                },
+                "validateTransferDirection": {
+                  "rule": "value => value === 'bidirectional'",
+                  "message": "Transfer direction must be bidirectional."
+                },
+                "validateItemContent": {
+                  "rule": "value => true",
+                  "message": "Item content validation failed."
+                },
+                "validateTransferSpeed": {
+                  "rule": "value => value === 'fast'",
+                  "message": "Transfer speed must be fast."
+                }
+              }
+            },
+            "custom": {}
+          },
+          {
+            field_is: "circular_integration",
+            name: "circular integration",
+            label: "CI",
+            default_value: false,
+            type: "boolean",
+            style: {},
+            helper_text: "",
+            variant: "",
+            filters: {
+              auto_complete: false,
+              auto_focus: false,
+              multiline: false,
+              disabled: false,
+              required: false,
+              hideLabel: false,
+              fullWidth: true
+            },
+            controller: {
+              name: "toggle",
+              control: "",
+              rules: {
+                validateToggle: {
+                  rule: value => value === true || value === false,
+                  message: "Toggle value must be either true or false."
+                },
+                minValue: {
+                  rule: value => value === false,
+                  message: "Minimum value should be false."
+                },
+                maxValue: {
+                  rule: value => value === true,
+                  message: "Maximum value should be true."
+                },
+                mustBeTrue: {
+                  rule: value => value === true,
+                  message: "The toggle must be set to true."
+                },
+                mustBeFalse: {
+                  rule: value => value === false,
+                  message: "The toggle must be set to false."
+                }
+              }
+            },
+            custom: {
+              circularProgress: {
+                integration: true,
+                color: "primary",
+                size: 40,
+                thickness: 4
+              }
+            }
+          },
+    
+        
+          
           
         
       

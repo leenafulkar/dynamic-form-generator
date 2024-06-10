@@ -1,5 +1,6 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { useForm, Controller } from 'react-hook-form';
+
 import { Button, 
   Container, 
   TextField, 
@@ -17,23 +18,77 @@ import { Button,
   Radio,
   RadioGroup,
   CircularProgress,
+  Paper,
+  List,
+  ListItem,
+  ListItemText,
+  ListSubheader
 } from '@mui/material';
 import fields from './fields';
 
+const TransferList = ({ sourceList, targetList, onChange }) => {
+  const [sourceItems, setSourceItems] = useState(sourceList.items);
+  const [targetItems, setTargetItems] = useState(targetList.items);
+
+  const handleTransfer = (item, fromSource) => {
+    if (fromSource) {
+      const updatedSourceItems = sourceItems.filter(i => i !== item);
+      setSourceItems(updatedSourceItems);
+      setTargetItems([...targetItems, item]);
+      // Pass the updated sourceItems and targetItems to the onChange function
+      onChange({ sourceItems: updatedSourceItems, targetItems: [...targetItems, item] });
+    } else {
+      const updatedTargetItems = targetItems.filter(i => i !== item);
+      setTargetItems(updatedTargetItems);
+      setSourceItems([...sourceItems, item]);
+      // Pass the updated sourceItems and targetItems to the onChange function
+      onChange({ sourceItems: [...sourceItems, item], targetItems: updatedTargetItems });
+    }
+  };
+
+  return (
+    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Paper>
+        <List subheader={<ListSubheader>{sourceList.label}</ListSubheader>}>
+          {sourceItems.map((item) => (
+            <ListItem button key={item} onClick={() => handleTransfer(item, true)}>
+              <ListItemText primary={item} />
+            </ListItem>
+          ))}
+        </List>
+      </Paper>
+      <Paper>
+        <List subheader={<ListSubheader>{targetList.label}</ListSubheader>}>
+          {targetItems.map((item) => (
+            <ListItem button key={item} onClick={() => handleTransfer(item, false)}>
+              <ListItemText primary={item} />
+            </ListItem>
+          ))}
+        </List>
+      </Paper>
+    </div>
+  );
+};
 const App = () => {
-  const { control, handleSubmit, reset } = useForm({
+ 
+  const { control, handleSubmit, reset, setValue} = useForm({
     defaultValues: fields.reduce((acc, field) => {
       acc[field.name] = field.default_value || '';
       return acc;
     }, {}),
   });
+  const [resetTransferListKey, setResetTransferListKey] = useState(0); // Key to reset the TransferList
 
-
-  
   const onSubmit = (data) => {
     console.log('Form data submitted:', data);
     reset();
+    setResetTransferListKey((prevKey) => prevKey + 1); // Increment the key to reset the TransferList
   };
+
+  const handleTransferChange = (name, value) => {
+    setValue(name, value.targetItems); // Update the form value with the targetItems
+  };
+  
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -264,16 +319,26 @@ const App = () => {
            
           </FormControl>
           
-        ) : null}
-        </>
+        ) : field.field_is === 'transfer' ? (
+          <TransferList
+          key={resetTransferListKey} // Reset the TransferList when the key changes
+          sourceList={fields.find((field) => field.field_is === 'transfer').source_list}
+          targetList={fields.find((field) => field.field_is === 'transfer').target_list}
+          onChange={(value) => handleTransferChange(fields.find((field) => field.field_is === 'transfer').name, value)}
+        />
         
-            )}
-          />
-        ))} <br/>
-        <Button type="submit" variant="contained">Submit</Button>
-      </Container>
-    </form>
-  );
+       
+        ) : null}
+      </>
+    )}
+  />
+))}
+<Button type="submit" variant="contained" color="primary" sx={{marginTop:'40px'}}>
+  Submit
+</Button>
+</Container>
+</form>
+);
 };
 
 export default App;
